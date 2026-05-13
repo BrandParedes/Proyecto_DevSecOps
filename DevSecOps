@@ -1,0 +1,23 @@
+use axum::{routing::get, Router};
+use tower_http::cors::{Any, CorsLayer};
+use std::net::SocketAddr;
+
+#[tokio::main]
+async fn main() {
+    // 1. The "Security Guard" (CORS)
+    // This allows your future web application to communicate with this backend code.
+    let cors = CorsLayer::new().allow_origin(Any);
+
+    // 2. Define the routes (the app paths)
+    let app = Router::new()
+        .route("/", get(|| async { "Hello Brandon! The server is running securely." }))
+        .layer(cors);
+
+    // 3. Your MacBook address (localhost)
+    let addr = SocketAddr::from(([127, 0, 0, 1], 3000));
+    println!("Server running at: http://{}", addr);
+
+    // 4. Start the server
+    let listener = tokio::net::TcpListener::bind(&addr).await.unwrap();
+    axum::serve(listener, app).await.unwrap();
+}
