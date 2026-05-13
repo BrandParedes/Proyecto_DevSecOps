@@ -1,8 +1,12 @@
 use axum::{routing::get, Router};
+// Axum is the framework for building the web server
 use tower_http::cors::{Any, CorsLayer};
+// Tower HTTP is a collection of tools for handling common things on web servers, like CORS.
 use std::net::SocketAddr;
+// SocketAddr is a structure that represents an IP address and port, such as "127.0.0.1:3000"
 
 #[tokio::main]
+// This is the main function that starts the server. The #[tokio::main] attribute indicates that this function is asynchronous and will run within the Tokyo runtime, which is a library for handling asynchronous tasks in Rust.
 async fn main() {
     // 1. The "Security Guard" (CORS)
     // This allows your future web application to communicate with this backend code.
